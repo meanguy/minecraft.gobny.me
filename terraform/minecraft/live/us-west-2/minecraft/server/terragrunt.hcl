@@ -11,6 +11,6 @@ include "env" {
 }
 
 inputs = {
-    image_id = "ami-06ba3cbb6f817839e"
+    image_id = "ami-01b6747a7dc66d8a5"
     instance_type = "c6i.xlarge"
 }

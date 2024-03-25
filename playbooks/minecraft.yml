@@ -31,5 +31,5 @@
         instances:
           - name: 'minecraft'
             exact_match: false
-            search-string:
+            search_string:
               - 'fabric-server-launch.jar'
