@@ -1,0 +1,35 @@
+---
+- name: 'Minecraft Packer playbook'
+  hosts: 'all'
+  gather_facts: true
+  become: true
+
+  roles:
+    - base
+    - minecraft
+    - datadog.datadog
+  vars:
+    install_dir: "{{ service_user.home }}/minecraft"
+
+    datadog_api_key: "{{ api_keys.datadog.api_key }}"
+    datadog_site: "{{ api_keys.datadog.site }}"
+    datadog_additional_groups:
+      - 'systemd-journal'
+    datadog_config:
+      logs_enabled: "{{ monitoring.logs.enabled }}"
+      tags:
+        - "env:{{ default_tags.env }}"
+        - "region:{{ default_tags.region }}"
+    datadog_checks:
+      journald:
+        logs:
+          - type: 'journald'
+            include_units:
+              - 'minecraft-server.service'
+      process:
+        init_config:
+        instances:
+          - name: 'minecraft'
+            exact_match: false
+            search-string:
+              - 'fabric-server-launch.jar'

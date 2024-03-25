@@ -1,0 +1,32 @@
+---
+- name: 'install apt packages'
+  apt:
+    name:
+      - 'gcc'
+      - 'jq'
+      - 'make'
+      - 'software-properties-common'
+      - 'sudo'
+      - 'unzip'
+      - 'zsh'
+    state: 'present'
+    update_cache: true
+
+- name: 'set timezone'
+  timezone:
+    name: 'America/Los_Angeles'
+
+- name: 'setup admin user'
+  import_tasks: 'setup-user.yml'
+  vars:
+    user: "{{ admin_user }}"
+
+- name: 'setup service user'
+  import_tasks: 'setup-user.yml'
+  vars:
+    user: "{{ service_user }}"
+
+- name: 'enable ssh server'
+  service:
+    name: 'ssh'
+    enabled: true

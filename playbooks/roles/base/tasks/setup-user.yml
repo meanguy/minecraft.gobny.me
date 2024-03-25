@@ -1,0 +1,28 @@
+---
+- name: 'create user'
+  user:
+    name: "{{ user.name }}"
+    home: "{{ user.home }}"
+    groups: "{{ user.groups }}"
+    shell: "{{ user.shell }}"
+
+    create_home: true
+    generate_ssh_key: true
+    ssh_key_bits: 4096
+    ssh_key_type: 'ed25519'
+    ssh_key_file: '.ssh/id_ed25519'
+    skeleton: '/etc/skel'
+    state: 'present'
+
+- name: 'enable password-less sudo'
+  template:
+    src: '99-sudoer.j2'
+    dest: "/etc/sudoers.d/99-{{ user.name }}"
+  vars:
+    username: "{{ user.name }}"
+  when: user.enable_sudo
+
+- name: 'add local ssh key to authorized keys'
+  authorized_key:
+    user: "{{ user.name }}"
+    key: "{{ lookup('file', user.local_ssh_key_path) }}"

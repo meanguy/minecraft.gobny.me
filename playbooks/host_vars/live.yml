@@ -1,0 +1,18 @@
+---
+minecraft:
+  server_properties:
+    name: 'Kawaii Powerlifters'
+    password: 'feetsalad'
+    motd: 'Kawaii Powerlifters Feet Appreciation Server'
+
+    heap:
+      min_mb: 4096
+      max_mb: 6144
+
+    ops:
+      - name: 'ganye'
+        uuid: '93162ae7-ed66-43d0-a7e5-0992200e5ca5'
+        level: 4
+      - name: 'NotPlagueBird'
+        uuid: '9677efd3-b22f-487c-822e-d5dd2d74782f'
+        level: 2

@@ -1,0 +1,74 @@
+---
+defaults:
+  server_properties:
+    difficulty: 'hard'
+    enable_jmx_monitoring: false
+    enable_rcon: true
+    gamemode: 'survival'
+    level_name: 'world'
+    level_seed: ''
+    max_players: 10
+    motd: 'A Minecraft Server'
+    name: 'Minecraft Server'
+    password: 'password'
+    previews_chat: true
+    pvp: true
+    rcon_password: "{{ minecraft_rcon_password }}"
+    rcon_port: 25575
+    save_dir: '/mnt/minecraft'
+    server_port: 25565
+    spawn_protection: 0
+
+    heap:
+      min_mb: 1024
+      max_mb: 2048
+    
+    mods:
+      - name: 'Fabric API'
+        download_url: 'https://cdn.modrinth.com/data/P7dR8mSH/versions/htRy7kbI/fabric-api-0.96.11%2B1.20.4.jar'
+      - name: 'Cloth Config'
+        download_url: 'https://cdn.modrinth.com/data/9s6osm5g/versions/eBZiZ9NS/cloth-config-13.0.121-fabric.jar'
+      - name: 'Lithium'
+        download_url: 'https://cdn.modrinth.com/data/gvQqBUqZ/versions/nMhjKWVE/lithium-fabric-mc1.20.4-0.12.1.jar'
+      - name: 'ModMenu'
+        download_url: 'https://cdn.modrinth.com/data/mOgUt4GM/versions/sjtVVlsA/modmenu-9.0.0.jar'
+      - name: 'Fabric Language Kotlin'
+        download_url: 'https://cdn.modrinth.com/data/Ha28R6CL/versions/ZMokinzs/fabric-language-kotlin-1.10.19%2Bkotlin.1.9.23.jar'
+      - name: 'Architectury'
+        download_url: 'https://cdn.modrinth.com/data/lhGA9TYQ/versions/kVjQWX0l/architectury-11.1.17-fabric.jar'
+      - name: 'FallingTree'
+        download_url: 'https://cdn.modrinth.com/data/Fb4jn8m6/versions/mb15RrXi/FallingTree-1.20.4-1.20.4.3.jar'
+      - name: 'Balm'
+        download_url: 'https://cdn.modrinth.com/data/MBAkmtvl/versions/kjIgNYGA/balm-fabric-1.20.4-9.0.6.jar'
+      - name: 'NetherPortalFix'
+        download_url: 'https://cdn.modrinth.com/data/nPZr02ET/versions/VtIpicaF/netherportalfix-fabric-1.20.4-15.0.1.jar'
+      - name: 'badpackets'
+        download_url: 'https://cdn.modrinth.com/data/ftdbN0KK/versions/riqsK6Al/badpackets-fabric-0.6.1.jar'
+      - name: 'resourceful-lib'
+        download_url: 'https://cdn.modrinth.com/data/G1hIVOrD/versions/TiIWVg2u/resourcefullib-fabric-1.20.4-2.4.10.jar'
+      - name: 'Veinminer'
+        download_url: 'https://cdn.modrinth.com/data/OhduvhIc/versions/bHmDs51u/veinminer-1.2.1.jar'
+      - name: 'DeepslateCutting'
+        download_url: 'https://cdn.modrinth.com/data/IiuFShHs/versions/DeBsNZpJ/deepslatecutting-fabric-1.7.0.jar'
+      - name: 'Forge Config API Port'
+        download_url: 'https://cdn.modrinth.com/data/ohNO6lps/versions/xbVGsTLe/ForgeConfigAPIPort-v20.4.3-1.20.4-Fabric.jar'
+      - name: 'Collective'
+        download_url: 'https://cdn.modrinth.com/data/e0M1UDsY/versions/n9TNesVV/collective-1.20.4-7.40.jar'
+      - name: 'Infinite Trading'
+        download_url: 'https://cdn.modrinth.com/data/U3eoZT3o/versions/ClJ1vWyy/infinitetrading-1.20.4-4.3.jar'
+      - name: 'Just Mob Heads'
+        download_url: 'https://cdn.modrinth.com/data/jzTUm9hE/versions/6fBGdfKP/justmobheads-1.20.4-7.6.jar'
+      - name: 'Prometheus'
+        download_url: 'https://cdn.modrinth.com/data/iYcNKH7W/versions/mRxmKKwW/prometheus-fabric-1.20.4-1.4.2.jar'
+      - name: 'Cadmus'
+        download_url: 'https://cdn.modrinth.com/data/fEWKxVzh/versions/EiatAg7l/cadmus-fabric-1.20.4-1.2.2.jar'
+      - name: 'Harvest with ease'
+        download_url: 'https://cdn.modrinth.com/data/W4Ajthd2/versions/1PbzU2TO/harvestwithease-1.20.4-8.0.1.0-fabric.jar'
+      - name: 'Easy Elytra Takeoff'
+        download_url: 'https://cdn.modrinth.com/data/3hqwGCUB/versions/W7SW9TPy/easyelytratakeoff-1.20.4-4.2.jar'
+      - name: 'Dynmap'
+        download_url: 'https://cdn.modrinth.com/data/fRQREgAc/versions/fOe507oy/Dynmap-3.7-beta-4-fabric-1.20.4.jar'
+      - name: 'Dragon Drops Elytra'
+        download_url: 'https://cdn.modrinth.com/data/DPkbo3dg/versions/K4nTfvLF/dragondropselytra-1.20.4-3.3.jar'
+
+    ops: []

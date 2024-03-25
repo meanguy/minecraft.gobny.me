@@ -1,0 +1,33 @@
+---
+admin_user:
+  name: 'jhaines'
+  home: '/home/jhaines'
+  groups: []
+
+  shell: '/usr/bin/zsh'
+  local_ssh_key_path: '~/.ssh/id_ed25519.pub'
+  enable_sudo: true
+
+service_user:
+  name: 'minecraft'
+  home: '/home/minecraft'
+  groups:
+    - 'systemd-journal'
+
+  shell: '/bin/false'
+  local_ssh_key_path: '/dev/null'
+  enable_sudo: false
+
+api_keys:
+  datadog:
+    api_key: ''
+    site: ''
+
+monitoring:
+  logs:
+    enabled: true
+    systemd_units: []
+
+default_tags:
+  env: ''
+  region: ''

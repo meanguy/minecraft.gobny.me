@@ -1,0 +1,2 @@
+---
+install_dir: "{{ service_user.home }}/minecraft"

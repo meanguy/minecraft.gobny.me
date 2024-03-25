@@ -1,0 +1,19 @@
+[Unit]
+Description=Dedicated Minecraft game server powered by Fabric
+
+[Service]
+Type=simple
+ExecStart={{ service_user.home }}/bin/start.sh
+WorkingDirectory={{ install_dir }}
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=5s
+User={{ service_user.name }}
+CPUWeight=20
+CPUQuota=85%
+MemoryAccounting=true
+MemoryHigh=80%
+MemoryMax=85%
+
+[Install]
+WantedBy=multi-user.target

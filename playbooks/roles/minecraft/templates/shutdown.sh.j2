@@ -1,0 +1,36 @@
+#! /usr/bin/env bash
+
+set -eufx
+
+function rcon() {
+    mcrcon \
+        -c \
+        -P {{ server_properties.rcon_port }} \
+        -p '{{ server_properties.rcon_password }}' \
+        "$@"
+}
+
+function timestamp() {
+    set +x
+    date +%k:%M
+    set -x
+}
+
+rcon "say [$(timestamp)] Server shutting down in 15 minutes"
+sleep 5m
+rcon "say [$(timestamp)] Server shutting down in 10 minutes"
+sleep 5m
+rcon "say [$(timestamp)] Server shutting down in 5 minutes"
+sleep 4m
+rcon "say [$(timestamp)] Server shutting down in 1 minute"
+sleep 30s
+rcon "say [$(timestamp)] Server shutting down in 30 seconds"
+sleep 25s
+rcon "say [$(timestamp)] Server shutting down in 5 seconds..."
+sleep 5s
+rcon "say [$(timestamp)] See you space cowboy..."
+rcon "save-all"
+rcon "stop"
+
+systemctl stop minecraft-server
+

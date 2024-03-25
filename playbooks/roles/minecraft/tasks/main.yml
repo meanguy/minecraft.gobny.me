@@ -1,0 +1,129 @@
+---
+- set_fact:
+    server_properties: "{{ defaults.server_properties | combine(minecraft.server_properties, recursive=True) }}"
+
+- name: 'install java 17'
+  apt:
+    name: 'openjdk-17-jre-headless'
+    state: 'present'
+
+- name: 'create install directory'
+  file:
+    path: "{{ install_dir }}"
+    state: 'directory'
+    owner: "{{ service_user.name }}"
+    group: "{{ service_user.name }}"
+    mode: '0755'
+
+- name: 'create mods directory'
+  file:
+    path: "{{ install_dir }}/mods"
+    state: 'directory'
+    owner: "{{ service_user.name }}"
+    group: "{{ service_user.name }}"
+    mode: '0755'
+
+- name: 'create service user bin directory'
+  file:
+    path: "{{ service_user.home }}/bin"
+    state: 'directory'
+    owner: "{{ service_user.name }}"
+    group: "{{ service_user.name }}"
+    mode: '0755'
+
+- name: 'create EULA agreement file'
+  copy:
+    content: 'eula=true'
+    dest: "{{ install_dir }}/eula.txt"
+    owner: "{{ service_user.name }}"
+    group: "{{ service_user.name }}"
+    mode: '0644'
+
+- name: 'create server properties file'
+  template:
+    src: 'server.properties.j2'
+    dest: "{{ install_dir }}/server.properties"
+    owner: "{{ service_user.name }}"
+    group: "{{ service_user.name }}"
+    mode: '0644'
+
+- name: 'create server ops file'
+  template:
+    src: 'ops.json.j2'
+    dest: "{{ install_dir }}/ops.json"
+    owner: "{{ service_user.name }}"
+    group: "{{ service_user.name }}"
+    mode: '0644'
+
+- name: 'download fabric minecraft server launcher'
+  get_url:
+    url: 'https://meta.fabricmc.net/v2/versions/loader/1.20.4/0.15.7/1.0.0/server/jar'
+    dest: "{{ install_dir }}/fabric-server-launch.jar"
+
+- name: 'install minecraft mods'
+  get_url:
+    url: "{{ item.download_url }}"
+    dest: "{{ install_dir }}/mods/"
+  loop: "{{ server_properties.mods }}"
+
+- name: 'install mcrcon'
+  unarchive:
+    src: 'https://github.com/Tiiffi/mcrcon/releases/download/v0.7.2/mcrcon-0.7.2-linux-x86-64.tar.gz'
+    dest: '/usr/local/bin'
+    remote_src: true
+    include:
+      - 'mcrcon'
+
+- name: 'create minecraft server administrative scripts'
+  template:
+    src: "{{ item }}.sh.j2"
+    dest: "{{ service_user.home }}/bin/{{ item }}.sh"
+    owner: "{{ service_user.name }}"
+    group: "{{ service_user.name }}"
+    mode: '0755'
+  loop:
+    - 'restart'
+    - 'shutdown'
+    - 'start'
+
+- name: 'create firewall ban control script'
+  copy:
+    src: 'ipctl.sh'
+    dest: "{{ service_user.home }}/bin/ipctl"
+    mode: '0755'
+
+- name: 'fix game directory permissions'
+  file:
+    dest: "{{ install_dir }}"
+    owner: "{{ service_user.name }}"
+    mode: 'u=rwX,g=rX,o=rX'
+    recurse: true
+
+- name: 'add fstab entry for world save volume'
+  mount:
+    path: "{{ server_properties.save_dir }}"
+    src: '/dev/nvme1n1p1'
+    fstype: 'ext4'
+    opts: 'defaults,nofail,x-systemd.mount-timeout=30s'
+    state: 'present'
+
+- name: 'create world save directory symlink'
+  file:
+    src: "{{ server_properties.save_dir }}"
+    dest: "{{ install_dir }}/world"
+    owner: "{{ service_user.name }}"
+    mode: '06755'
+    state: link
+    follow: false
+    force: true # symlink src will be provided by an external volume mount
+
+- name: 'create minecraft server systemd service file'
+  template:
+    src: 'minecraft-server.service.j2'
+    dest: '/etc/systemd/system/minecraft-server.service'
+
+- name: 'enable minecraft server systemd unit'
+  systemd:
+    name: 'minecraft-server'
+    enabled: true
+    daemon_reload: true
