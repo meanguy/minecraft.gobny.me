@@ -3,5 +3,6 @@
 java \
     -Xmx{{ server_properties.heap.max_mb }}m \
     -Xms{{ server_properties.heap.min_mb }}m \
+    -XX:+UseG1GC \
     -jar "{{ install_dir }}/fabric-server-launch.jar" \
     nogui

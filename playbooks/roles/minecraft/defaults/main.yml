@@ -70,5 +70,7 @@ defaults:
         download_url: 'https://cdn.modrinth.com/data/fRQREgAc/versions/fOe507oy/Dynmap-3.7-beta-4-fabric-1.20.4.jar'
       - name: 'Dragon Drops Elytra'
         download_url: 'https://cdn.modrinth.com/data/DPkbo3dg/versions/K4nTfvLF/dragondropselytra-1.20.4-3.3.jar'
+      - name: 'Chunky'
+        download_url: 'https://cdn.modrinth.com/data/fALzjamp/versions/iwsbfPGg/Chunky-1.3.138.jar'
 
     ops: []
