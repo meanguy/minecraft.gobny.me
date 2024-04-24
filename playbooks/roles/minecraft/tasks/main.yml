@@ -2,9 +2,9 @@
 - set_fact:
     server_properties: "{{ defaults.server_properties | combine(minecraft.server_properties, recursive=True) }}"
 
-- name: 'install java 17'
+- name: 'install java 21'
   apt:
-    name: 'openjdk-17-jre-headless'
+    name: 'openjdk-21-jre-headless'
     state: 'present'
 
 - name: 'create install directory'
@@ -57,7 +57,7 @@
 
 - name: 'download fabric minecraft server launcher'
   get_url:
-    url: 'https://meta.fabricmc.net/v2/versions/loader/1.20.4/0.15.7/1.0.0/server/jar'
+    url: "https://meta.fabricmc.net/v2/versions/loader/{{ server_properties.version }}/{{ server_properties.fabric_version }}/{{ server_properties.loader_version }}/server/jar"
     dest: "{{ install_dir }}/fabric-server-launch.jar"
 
 - name: 'install minecraft mods'
